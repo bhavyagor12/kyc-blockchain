@@ -4,6 +4,595 @@
  */
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
-const deployedContracts = {} as const;
+const deployedContracts = {
+  31337: {
+    KYCVerification: {
+      address: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [],
+          name: "BankBlockedFromKYC",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [],
+          name: "BankRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [],
+          name: "ContractInitialized",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [],
+          name: "CustomerInfoModified",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [],
+          name: "CustomerKYCRequestAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [],
+          name: "CustomerKYCRequestApproved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [],
+          name: "CustomerKYCRequestRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [],
+          name: "CustomerRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [],
+          name: "NewBankCreated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "customerAddress",
+              type: "address",
+            },
+          ],
+          name: "NewCustomerCreated",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "age",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "phoneNumber",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "aadharIPFS",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "panIPFS",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "photoIPFS",
+              type: "string",
+            },
+          ],
+          name: "addCustomer",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "bankAddressess",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "banks",
+          outputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "regNumber",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "kycCount",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "ethAddress",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "isAllowedToAddCustomer",
+              type: "bool",
+            },
+            {
+              internalType: "bool",
+              name: "kycPrivilege",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "banksRegistrationNumberMapping",
+          outputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "regNumber",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "kycCount",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "ethAddress",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "isAllowedToAddCustomer",
+              type: "bool",
+            },
+            {
+              internalType: "bool",
+              name: "kycPrivilege",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "customerAddresses",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "customersInformation",
+          outputs: [
+            {
+              internalType: "address",
+              name: "customerAddress",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "age",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "phoneNumber",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "aadharIPFS",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "panIPFS",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "photoIPFS",
+              type: "string",
+            },
+            {
+              internalType: "enum KYCVerificationStructs.KycStatus",
+              name: "status",
+              type: "uint8",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "customerAddress",
+              type: "address",
+            },
+          ],
+          name: "getCustomerInfo",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "customerAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "name",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "age",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "phoneNumber",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "aadharIPFS",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "panIPFS",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "photoIPFS",
+                  type: "string",
+                },
+                {
+                  internalType: "enum KYCVerificationStructs.KycStatus",
+                  name: "status",
+                  type: "uint8",
+                },
+              ],
+              internalType: "struct KYCVerificationStructs.Customer",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "userAddress",
+              type: "address",
+            },
+          ],
+          name: "getRoleOfAddress",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "kycRequests",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "customerUniqueId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "bankAddress",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "adminResponse",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "age",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "phoneNumber",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "aadharIPFS",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "panIPFS",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "photoIPFS",
+              type: "string",
+            },
+          ],
+          name: "updateCustomer",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    YourContract: {
+      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_owner",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "greetingSetter",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "newGreeting",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "premium",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "GreetingChange",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "greeting",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "premium",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_newGreeting",
+              type: "string",
+            },
+          ],
+          name: "setGreeting",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalCounter",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "userGreetingCounter",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "withdraw",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+  },
+} as const;
 
 export default deployedContracts satisfies GenericContractsDeclaration;
