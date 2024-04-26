@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     KYCVerification: {
-      address: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      address: "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
       abi: [
         {
           inputs: [],
@@ -89,6 +89,24 @@ const deployedContracts = {
               type: "string",
             },
             {
+              internalType: "uint256",
+              name: "registrationNumber",
+              type: "uint256",
+            },
+          ],
+          name: "addBank",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
               internalType: "string",
               name: "age",
               type: "string",
@@ -127,7 +145,7 @@ const deployedContracts = {
               type: "uint256",
             },
           ],
-          name: "bankAddressess",
+          name: "bankAddresses",
           outputs: [
             {
               internalType: "address",
@@ -155,28 +173,13 @@ const deployedContracts = {
             },
             {
               internalType: "uint256",
-              name: "regNumber",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
               name: "kycCount",
               type: "uint256",
             },
             {
               internalType: "address",
-              name: "ethAddress",
+              name: "bankAddress",
               type: "address",
-            },
-            {
-              internalType: "bool",
-              name: "isAllowedToAddCustomer",
-              type: "bool",
-            },
-            {
-              internalType: "bool",
-              name: "kycPrivilege",
-              type: "bool",
             },
           ],
           stateMutability: "view",
@@ -199,28 +202,13 @@ const deployedContracts = {
             },
             {
               internalType: "uint256",
-              name: "regNumber",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
               name: "kycCount",
               type: "uint256",
             },
             {
               internalType: "address",
-              name: "ethAddress",
+              name: "bankAddress",
               type: "address",
-            },
-            {
-              internalType: "bool",
-              name: "isAllowedToAddCustomer",
-              type: "bool",
-            },
-            {
-              internalType: "bool",
-              name: "kycPrivilege",
-              type: "bool",
             },
           ],
           stateMutability: "view",
@@ -300,6 +288,60 @@ const deployedContracts = {
           type: "function",
         },
         {
+          inputs: [],
+          name: "getAllBankAddresses",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "",
+              type: "address[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "bankAddress",
+              type: "address",
+            },
+          ],
+          name: "getBankInfo",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "name",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "kycCount",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "bankAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "customers",
+                  type: "address[]",
+                },
+              ],
+              internalType: "struct KYCVerificationStructs.Bank",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
           inputs: [
             {
               internalType: "address",
@@ -364,6 +406,42 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "address",
+              name: "customerAddress",
+              type: "address",
+            },
+          ],
+          name: "getKycRequest",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "aadharHash",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "panHash",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "photoHash",
+                  type: "string",
+                },
+              ],
+              internalType: "struct KYCVerificationStructs.KYCRequest",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
               name: "userAddress",
               type: "address",
             },
@@ -382,30 +460,66 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "uint256",
+              internalType: "address",
               name: "",
-              type: "uint256",
+              type: "address",
             },
           ],
           name: "kycRequests",
           outputs: [
             {
-              internalType: "uint256",
-              name: "customerUniqueId",
-              type: "uint256",
+              internalType: "string",
+              name: "aadharHash",
+              type: "string",
             },
             {
-              internalType: "address",
-              name: "bankAddress",
-              type: "address",
+              internalType: "string",
+              name: "panHash",
+              type: "string",
             },
             {
-              internalType: "bool",
-              name: "adminResponse",
-              type: "bool",
+              internalType: "string",
+              name: "photoHash",
+              type: "string",
             },
           ],
           stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "customerAddress",
+              type: "address",
+            },
+          ],
+          name: "removeCustomer",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_aadharHash",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "_panHash",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "_photoHash",
+              type: "string",
+            },
+          ],
+          name: "sendDocsForKyc",
+          outputs: [],
+          stateMutability: "nonpayable",
           type: "function",
         },
         {
@@ -442,6 +556,19 @@ const deployedContracts = {
             },
           ],
           name: "updateCustomer",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "customerAddress",
+              type: "address",
+            },
+          ],
+          name: "verifyKyc",
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",

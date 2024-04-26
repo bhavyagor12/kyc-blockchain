@@ -14,17 +14,15 @@ library KYCVerificationStructs {
 
     struct Bank {
         string name;
-        uint256 regNumber;
         uint256 kycCount; //count of how many requests a specific bank has requested
-        address ethAddress;
-        bool isAllowedToAddCustomer; //permission to add new customers,only given to a few banks that the super admin trusts with identity validation and verification
-        bool kycPrivilege; //permisiion to request/delete new KYC reports on customers and to view the
+        address bankAddress;
+        address[] customers;
     }
 
     struct KYCRequest {
-        uint256 customerUniqueId;
-        address bankAddress;
-        bool adminResponse;
+      string aadharHash;
+      string panHash;
+      string photoHash;
     }
 
     enum BankActions {

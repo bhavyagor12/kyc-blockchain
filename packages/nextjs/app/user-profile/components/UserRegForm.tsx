@@ -3,6 +3,8 @@ import { useAccount } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
+const JWT = process.env.NEXT_PUBLIC_PINATA_JWT;
+
 const UserRegForm = ({
   edit,
   isReadOnly,
@@ -61,9 +63,9 @@ const UserRegForm = ({
     if (!aadharFile || !panFile || !photoFile) {
       throw new Error("Please upload all files");
     }
-    const aadharHash = await uploadToIPFS(aadharFile, "aadhar"+connectedAddress);
-    const panHash = await uploadToIPFS(panFile, "pan"+connectedAddress);
-    const photoHash = await uploadToIPFS(photoFile, "photo"+connectedAddress);
+    const aadharHash = await uploadToIPFS(aadharFile, "aadhar" + connectedAddress);
+    const panHash = await uploadToIPFS(panFile, "pan" + connectedAddress);
+    const photoHash = await uploadToIPFS(photoFile, "photo" + connectedAddress);
 
     // Your submit logic here
     await writeContractAsync({
@@ -73,12 +75,12 @@ const UserRegForm = ({
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="flex flex-col items-center w-full">
       {!isReadOnly && (
-        <div className="mb-4">
+        <>
           <h2 className="text-2xl font-semibold mb-2">{edit ? "Edit" : "Create"} Form For User:</h2>
           <Address address={connectedAddress} />
-        </div>
+        </>
       )}
 
       <div className="max-w-md mx-auto">
@@ -92,7 +94,7 @@ const UserRegForm = ({
           onChange={e => setName(e.target.value)}
           name="name"
           placeholder="Enter your name"
-          className="input input-bordered"
+          className="input input-bordered w-full"
         />
         <label htmlFor="age" className="block text-lg font-semibold mb-2 mt-4">
           Age
@@ -103,7 +105,7 @@ const UserRegForm = ({
           value={age}
           name="age"
           onChange={e => setAge(e.target.value)}
-          className="input input-bordered"
+          className="input input-bordered w-full"
         />
         <label htmlFor="phone" className="block text-lg font-semibold mb-2 mt-4">
           Phone Number
@@ -115,7 +117,7 @@ const UserRegForm = ({
           value={phone}
           onChange={e => setPhone(e.target.value)}
           placeholder="Enter your phone number"
-          className="input input-bordered"
+          className="input input-bordered w-full"
         />
 
         <FileUploadSection
@@ -163,17 +165,20 @@ const FileUploadSection = ({
       </label>
       <div className="flex items-center gap-4 mt-2">
         {hash ? (
-          <div className="flex flex-col items-center">
+          <div className="flex items-center gap-4">
+            {/* @eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`https://amber-causal-cougar-937.mypinata.cloud/ipfs/${hash}`}
               alt={`${label} from IPFS`}
               className="rounded-lg"
               width={"250px"}
             />
-            <label htmlFor={label} className="text-lg font-semibold mt-2">
-              Update {label}
-            </label>
-            <input type="file" onChange={e => setFile(e.target.files?.[0] || null)} className="file-input mt-1" />
+            <div className="flex flex-col gap-2 items-center">
+              <label htmlFor={label} className="text-lg font-semibold mt-2">
+                Update {label}
+              </label>
+              <input type="file" onChange={e => setFile(e.target.files?.[0] || null)} className="file-input mt-1" />
+            </div>
           </div>
         ) : (
           <>
