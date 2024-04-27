@@ -32,58 +32,55 @@ const UserKYCStatus = ({ kycStatus }: { kycStatus: string }) => {
   }, [selectedBankAddress, refetch]);
 
   const { writeContractAsync: applyKyc } = useScaffoldWriteContract("KYCVerification");
-  console.log("bankInfo", bankInfo, selectedBankAddress, banksArray);
   return (
-    <>
+    <div className="w-[50%] bg-base-100 rounded-md">
       {banksArray && bankInfo ? (
         <>
-          <div className="bg-base-300 w-full h-full">
-            <h1 className="text-center">
-              <span className="block text-2xl mb-2">KYC Status</span>
-              <span className="block text-lg mb-2">{kycStatus}</span>
+          <div className="bg-base-100 w-full h-full rounded-md">
+            <h1 className="flex items-center justify-center text-center">
+              <span className="block text-2xl mb-2">KYC Status: {kycStatus}</span>
             </h1>
-            <div className="flex flex-col items-center">
-              <div className="flex flex-col items-center justify-center w-full">
-                <label htmlFor="bank" className="block text-lg font-semibold mb-2">
-                  Bank name
-                </label>
-                <select
-                  onChange={e => setSelectedBankAddress(e.target.value)}
-                  className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-                >
-                  {banksArray.map((bank: string, index: number) => (
-                    <option key={index} value={bank}>
-                      {bankInfo.name}
-                    </option>
-                  ))}
-                </select>{" "}
-              </div>
+            {kycStatus !== "Verified" && (
+              <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center justify-center w-full">
+                  <label htmlFor="bank" className="block text-lg font-semibold mb-2">
+                    Bank name
+                  </label>
+                  <select onChange={e => setSelectedBankAddress(e.target.value)} className="select">
+                    {banksArray.map((bank: string, index: number) => (
+                      <option key={index} value={bank}>
+                        {bankInfo.name}
+                      </option>
+                    ))}
+                  </select>{" "}
+                </div>
 
-              <button
-                className="btn btn-primary mt-2"
-                onClick={() => {
-                  if (
-                    !customerInfo?.aadharIPFS ||
-                    !customerInfo?.panIPFS ||
-                    !customerInfo?.photoIPFS ||
-                    !selectedBankAddress
-                  ) {
-                    throw new Error("Please upload all files");
-                  }
-                  applyKyc({
-                    functionName: "sendDocsForKyc",
-                    args: [
-                      customerInfo?.aadharIPFS as string,
-                      customerInfo?.panIPFS as string,
-                      customerInfo?.photoIPFS as string,
-                      selectedBankAddress as string,
-                    ],
-                  });
-                }}
-              >
-                Apply for KYC
-              </button>
-            </div>
+                <button
+                  className="btn btn-primary m-2"
+                  onClick={() => {
+                    if (
+                      !customerInfo?.aadharIPFS ||
+                      !customerInfo?.panIPFS ||
+                      !customerInfo?.photoIPFS ||
+                      !selectedBankAddress
+                    ) {
+                      throw new Error("Please upload all files");
+                    }
+                    applyKyc({
+                      functionName: "sendDocsForKyc",
+                      args: [
+                        customerInfo?.aadharIPFS as string,
+                        customerInfo?.panIPFS as string,
+                        customerInfo?.photoIPFS as string,
+                        selectedBankAddress as string,
+                      ],
+                    });
+                  }}
+                >
+                  Apply for KYC
+                </button>
+              </div>
+            )}
           </div>
         </>
       ) : (
@@ -91,7 +88,7 @@ const UserKYCStatus = ({ kycStatus }: { kycStatus: string }) => {
           <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-32 w-32"></div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

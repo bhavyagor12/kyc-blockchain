@@ -9,19 +9,24 @@ const StringTable = ({
   onRowClick: (string: string) => void;
   title: string;
 }) => {
+  const filteredStrings = strings?.filter(
+    string => string !== "" && string !== "0x0000000000000000000000000000000000000000",
+  );
   return (
-    <div className="overflow-x-auto">
-      <table className="table-auto w-full">
+    <div className="overflow-x-auto bg-base-100">
+      <table className="table-auto w-full border ">
         <thead>
           <tr>
-            <th className="px-4 py-2">{title}</th>
+            <th className="px-4 py-2 border border-primary-900">{title}</th>
           </tr>
         </thead>
         <tbody>
-          {strings?.length > 0 ? (
-            strings.map((string, index) => (
-              <tr key={index} className="cursor-pointer hover:bg-gray-100" onClick={() => onRowClick(string)}>
-                <td className="border px-4 py-2">{string}</td>
+          {filteredStrings?.length > 0 ? (
+            filteredStrings.map((string, index) => (
+              <tr key={index} className="cursor-pointer hover:bg-base-100 " onClick={() => onRowClick(string)}>
+                <td className="border px-4 py-2 text-center">
+                  {string.length > 10 ? string.slice(0, 6) + "..." + string.slice(-4) : string}
+                </td>
               </tr>
             ))
           ) : (

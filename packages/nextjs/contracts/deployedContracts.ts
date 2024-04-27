@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     KYCVerification: {
-      address: "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
+      address: "0x67d269191c92Caf3cD7723F116c85e6E9bf55933",
       abi: [
         {
           inputs: [],
@@ -89,9 +89,19 @@ const deployedContracts = {
               type: "string",
             },
             {
-              internalType: "uint256",
-              name: "registrationNumber",
-              type: "uint256",
+              internalType: "address",
+              name: "bankAddress",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "ifsc",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "branch",
+              type: "string",
             },
           ],
           name: "addBank",
@@ -205,34 +215,15 @@ const deployedContracts = {
               name: "bankAddress",
               type: "address",
             },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          name: "banksRegistrationNumberMapping",
-          outputs: [
             {
               internalType: "string",
-              name: "name",
+              name: "ifsc",
               type: "string",
             },
             {
-              internalType: "uint256",
-              name: "kycCount",
-              type: "uint256",
-            },
-            {
-              internalType: "address",
-              name: "bankAddress",
-              type: "address",
+              internalType: "string",
+              name: "branch",
+              type: "string",
             },
           ],
           stateMutability: "view",
@@ -356,6 +347,16 @@ const deployedContracts = {
                   name: "customers",
                   type: "address[]",
                 },
+                {
+                  internalType: "string",
+                  name: "ifsc",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "branch",
+                  type: "string",
+                },
               ],
               internalType: "struct KYCVerificationStructs.Bank",
               name: "",
@@ -379,6 +380,19 @@ const deployedContracts = {
               internalType: "string[]",
               name: "",
               type: "string[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getCustomerAddresses",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "",
+              type: "address[]",
             },
           ],
           stateMutability: "view",
@@ -435,6 +449,11 @@ const deployedContracts = {
                   internalType: "enum KYCVerificationStructs.KycStatus",
                   name: "status",
                   type: "uint8",
+                },
+                {
+                  internalType: "address[]",
+                  name: "banksAccounts",
+                  type: "address[]",
                 },
               ],
               internalType: "struct KYCVerificationStructs.Customer",
@@ -553,6 +572,45 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "address",
+              name: "bankAddress",
+              type: "address",
+            },
+          ],
+          name: "openBankAccount",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "bankAddress",
+              type: "address",
+            },
+          ],
+          name: "removeBank",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "bankAddress",
+              type: "address",
+            },
+          ],
+          name: "removeBankAccount",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
               name: "customerAddress",
               type: "address",
             },
@@ -639,6 +697,11 @@ const deployedContracts = {
               internalType: "uint256",
               name: "status",
               type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "requestId",
+              type: "string",
             },
           ],
           name: "verifyKyc",

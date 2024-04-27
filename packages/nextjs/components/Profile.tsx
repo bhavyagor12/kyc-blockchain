@@ -6,16 +6,23 @@ import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outl
 const Profile = ({ user, data, address }: { user: string; data: any; address: string }) => {
   const [valueCopied, setValueCopied] = React.useState(false);
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 max-w-sm mx-auto">
+    <div className="bg-base-100 rounded-lg shadow-md p-6 w-full mx-auto">
       <h1 className="text-2xl font-semibold mb-4">{user} Profile</h1>
       <Address address={address} />
       <div className="grid grid-cols-2 gap-y-2">
         {data?.name && (
           <>
             {Object.entries(data).map(([key, value]) => {
-              if (key.toLowerCase().includes("address") || key === "status") return null;
+              if (
+                key.toLowerCase().includes("address") ||
+                key === "status" ||
+                key === "customers" ||
+                key === "banksAccounts" ||
+                key === "kycCount"
+              )
+                return null;
               return (
-                <p key={key} className="text-gray-700">
+                <p key={key} className="text-primary-700">
                   <span className="font-semibold">{key}:</span>{" "}
                   <span className="flex items-center gap-1">
                     {value.length > 10 ? value?.slice(0, 6) + "..." + value?.slice(-4) : value}

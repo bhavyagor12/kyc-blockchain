@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
 library KYCVerificationStructs {
@@ -10,6 +11,7 @@ library KYCVerificationStructs {
         string panIPFS;
         string photoIPFS;
         KycStatus status;
+        address[] banksAccounts;
     }
 
     struct Bank {
@@ -17,6 +19,8 @@ library KYCVerificationStructs {
         uint256 kycCount; //count of how many requests a specific bank has requested
         address bankAddress;
         address[] customers;
+        string ifsc;
+        string branch;
     }
 
     struct KYCRequest {
