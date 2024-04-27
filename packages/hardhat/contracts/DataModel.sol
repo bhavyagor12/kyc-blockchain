@@ -20,10 +20,11 @@ library KYCVerificationStructs {
     }
 
     struct KYCRequest {
+      string requestId;
       string aadharHash;
       string panHash;
       string photoHash;
-      address bankAddress;
+      address customerAddress;
     }
 
     enum BankActions {

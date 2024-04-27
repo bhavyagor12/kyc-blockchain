@@ -3,8 +3,8 @@ import { useAccount } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
-const JWT = process.env.NEXT_PUBLIC_PINATA_JWT;
-
+export const JWT = process.env.NEXT_PUBLIC_PINATA_JWT;
+export const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const UserRegForm = ({
   edit,
   isReadOnly,
@@ -167,12 +167,7 @@ const FileUploadSection = ({
         {hash ? (
           <div className="flex items-center gap-4">
             {/* @eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`https://amber-causal-cougar-937.mypinata.cloud/ipfs/${hash}`}
-              alt={`${label} from IPFS`}
-              className="rounded-lg"
-              width={"250px"}
-            />
+            <img src={`${GATEWAY_URL}/${hash}`} alt={`${label} from IPFS`} className="rounded-lg" width={"250px"} />
             <div className="flex flex-col gap-2 items-center">
               <label htmlFor={label} className="text-lg font-semibold mt-2">
                 Update {label}

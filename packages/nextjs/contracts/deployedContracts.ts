@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     KYCVerification: {
-      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      address: "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
       abi: [
         {
           inputs: [],
@@ -135,6 +135,30 @@ const deployedContracts = {
           name: "addCustomer",
           outputs: [],
           stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "bankAddressToKycRequests",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
         {
@@ -345,6 +369,25 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "address",
+              name: "bankAddress",
+              type: "address",
+            },
+          ],
+          name: "getBankKycRequests",
+          outputs: [
+            {
+              internalType: "string[]",
+              name: "",
+              type: "string[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
               name: "customerAddress",
               type: "address",
             },
@@ -405,15 +448,20 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "address",
-              name: "customerAddress",
-              type: "address",
+              internalType: "string",
+              name: "requestId",
+              type: "string",
             },
           ],
           name: "getKycRequest",
           outputs: [
             {
               components: [
+                {
+                  internalType: "string",
+                  name: "requestId",
+                  type: "string",
+                },
                 {
                   internalType: "string",
                   name: "aadharHash",
@@ -428,6 +476,11 @@ const deployedContracts = {
                   internalType: "string",
                   name: "photoHash",
                   type: "string",
+                },
+                {
+                  internalType: "address",
+                  name: "customerAddress",
+                  type: "address",
                 },
               ],
               internalType: "struct KYCVerificationStructs.KYCRequest",
@@ -460,13 +513,18 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "address",
+              internalType: "string",
               name: "",
-              type: "address",
+              type: "string",
             },
           ],
           name: "kycRequests",
           outputs: [
+            {
+              internalType: "string",
+              name: "requestId",
+              type: "string",
+            },
             {
               internalType: "string",
               name: "aadharHash",
@@ -481,6 +539,11 @@ const deployedContracts = {
               internalType: "string",
               name: "photoHash",
               type: "string",
+            },
+            {
+              internalType: "address",
+              name: "customerAddress",
+              type: "address",
             },
           ],
           stateMutability: "view",
@@ -515,6 +578,11 @@ const deployedContracts = {
               internalType: "string",
               name: "_photoHash",
               type: "string",
+            },
+            {
+              internalType: "address",
+              name: "_bankAddress",
+              type: "address",
             },
           ],
           name: "sendDocsForKyc",
@@ -566,6 +634,11 @@ const deployedContracts = {
               internalType: "address",
               name: "customerAddress",
               type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "status",
+              type: "uint256",
             },
           ],
           name: "verifyKyc",

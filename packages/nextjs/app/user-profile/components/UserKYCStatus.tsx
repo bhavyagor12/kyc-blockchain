@@ -32,6 +32,7 @@ const UserKYCStatus = ({ kycStatus }: { kycStatus: string }) => {
   }, [selectedBankAddress, refetch]);
 
   const { writeContractAsync: applyKyc } = useScaffoldWriteContract("KYCVerification");
+  console.log("bankInfo", bankInfo, selectedBankAddress, banksArray);
   return (
     <>
       {banksArray && bankInfo ? (
@@ -43,6 +44,9 @@ const UserKYCStatus = ({ kycStatus }: { kycStatus: string }) => {
             </h1>
             <div className="flex flex-col items-center">
               <div className="flex flex-col items-center justify-center w-full">
+                <label htmlFor="bank" className="block text-lg font-semibold mb-2">
+                  Bank name
+                </label>
                 <select
                   onChange={e => setSelectedBankAddress(e.target.value)}
                   className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
@@ -54,7 +58,31 @@ const UserKYCStatus = ({ kycStatus }: { kycStatus: string }) => {
                   ))}
                 </select>{" "}
               </div>
-              <button className="btn btn-primary">Apply for KYC</button>
+
+              <button
+                className="btn btn-primary mt-2"
+                onClick={() => {
+                  if (
+                    !customerInfo?.aadharIPFS ||
+                    !customerInfo?.panIPFS ||
+                    !customerInfo?.photoIPFS ||
+                    !selectedBankAddress
+                  ) {
+                    throw new Error("Please upload all files");
+                  }
+                  applyKyc({
+                    functionName: "sendDocsForKyc",
+                    args: [
+                      customerInfo?.aadharIPFS as string,
+                      customerInfo?.panIPFS as string,
+                      customerInfo?.photoIPFS as string,
+                      selectedBankAddress as string,
+                    ],
+                  });
+                }}
+              >
+                Apply for KYC
+              </button>
             </div>
           </div>
         </>

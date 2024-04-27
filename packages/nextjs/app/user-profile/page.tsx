@@ -40,7 +40,7 @@ const UserProfile: NextPage = () => {
           {edit ? (
             <UserRegForm edit={edit} isReadOnly={false} customerInfo={customerInfo} />
           ) : (
-            <Profile user="User" data={customerInfo} />
+            <Profile user="User" data={customerInfo} address={connectedAddress as string} />
           )}
           <UserKYCStatus kycStatus={processStatus(customerInfo.status)} />
         </>
