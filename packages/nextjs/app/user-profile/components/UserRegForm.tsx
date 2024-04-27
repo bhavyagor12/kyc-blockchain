@@ -12,7 +12,7 @@ const UserRegForm = ({
 }: {
   edit: boolean;
   isReadOnly: boolean;
-  customerInfo: {
+  customerInfo?: {
     name: string;
     age: string;
     phoneNumber: string;
@@ -66,7 +66,7 @@ const UserRegForm = ({
     const aadharHash = await uploadToIPFS(aadharFile, "aadhar" + connectedAddress);
     const panHash = await uploadToIPFS(panFile, "pan" + connectedAddress);
     const photoHash = await uploadToIPFS(photoFile, "photo" + connectedAddress);
-
+    console.log(aadharHash, panHash, photoHash);
     // Your submit logic here
     await writeContractAsync({
       functionName: !edit ? "addCustomer" : "updateCustomer",

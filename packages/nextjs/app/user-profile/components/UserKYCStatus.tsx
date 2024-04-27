@@ -1,13 +1,20 @@
 import React, { useEffect } from "react";
-import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
+import { useAccount } from "wagmi";
+import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 const UserKYCStatus = ({ kycStatus }: { kycStatus: string }) => {
+  const { address: connectedAddress } = useAccount();
   const [selectedBankAddress, setSelectedBankAddress] = React.useState<string>("");
   const { data: banksArray } = useScaffoldReadContract({
     contractName: "KYCVerification",
     functionName: "getAllBankAddresses",
   });
 
+  const { data: customerInfo } = useScaffoldReadContract({
+    contractName: "KYCVerification",
+    functionName: "getCustomerInfo",
+    args: [connectedAddress],
+  });
   const { data: bankInfo, refetch } = useScaffoldReadContract({
     contractName: "KYCVerification",
     functionName: "getBankInfo",
@@ -23,7 +30,8 @@ const UserKYCStatus = ({ kycStatus }: { kycStatus: string }) => {
 
     refetch();
   }, [selectedBankAddress, refetch]);
-  console.log(banksArray, bankInfo);
+
+  const { writeContractAsync: applyKyc } = useScaffoldWriteContract("KYCVerification");
   return (
     <>
       {banksArray && bankInfo ? (
@@ -46,6 +54,7 @@ const UserKYCStatus = ({ kycStatus }: { kycStatus: string }) => {
                   ))}
                 </select>{" "}
               </div>
+              <button className="btn btn-primary">Apply for KYC</button>
             </div>
           </div>
         </>

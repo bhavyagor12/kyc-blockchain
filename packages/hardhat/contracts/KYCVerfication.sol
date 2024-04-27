@@ -73,11 +73,11 @@ contract KYCVerification {
      emit NewBankCreated();
    }
    
-   function sendDocsForKyc(string memory _aadharHash, string memory _panHash, string memory _photoHash) public {
+   function sendDocsForKyc(string memory _aadharHash, string memory _panHash, string memory _photoHash,address _bankAddress) public {
     require(customersInformation[msg.sender].customerAddress == msg.sender, "Customer does not exist");
     KYCVerificationStructs.Customer storage customer = customersInformation[msg.sender];
     require(customer.status != KYCVerificationStructs.KycStatus.Approved, "KYC Request already approved");
-    KYCVerificationStructs.KYCRequest memory newRequest = KYCVerificationStructs.KYCRequest(_aadharHash, _panHash, _photoHash);
+    KYCVerificationStructs.KYCRequest memory newRequest = KYCVerificationStructs.KYCRequest(_aadharHash, _panHash, _photoHash,_bankAddress,msg.sender);
     kycRequests[msg.sender] = newRequest;
     customer.status = KYCVerificationStructs.KycStatus.Pending;
     emit CustomerKYCRequestAdded();
@@ -108,6 +108,8 @@ function verifyKyc(address customerAddress) public onlyBank {
        return "User";
      }
    }
+
+   
 
    function getCustomerInfo(address customerAddress) public view returns(KYCVerificationStructs.Customer memory) {
      return customersInformation[customerAddress];

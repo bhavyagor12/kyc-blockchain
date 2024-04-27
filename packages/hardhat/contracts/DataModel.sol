@@ -23,6 +23,7 @@ library KYCVerificationStructs {
       string aadharHash;
       string panHash;
       string photoHash;
+      address bankAddress;
     }
 
     enum BankActions {
