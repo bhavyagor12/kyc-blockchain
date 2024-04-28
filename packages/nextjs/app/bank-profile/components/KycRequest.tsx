@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { GATEWAY_URL } from "~~/app/user-profile/components/UserRegForm";
 import { Profile } from "~~/components/Profile";
@@ -20,7 +20,6 @@ const compareHashes = (
   ) {
     return true;
   }
-
   return false;
 };
 
@@ -36,7 +35,27 @@ const KycRequest = ({ requestId }: { requestId: string }) => {
     functionName: "getCustomerInfo",
     args: [kycRequest?.customerAddress],
   });
+  const [hashesMatch, setHashesMatch] = useState(false);
+  const [hashesVerified, setHashesVerified] = useState(false);
 
+  const verifyHashes = () => {
+    if (
+      compareHashes(
+        kycRequest?.aadharHash as string,
+        kycRequest?.panHash as string,
+        kycRequest?.photoHash as string,
+        customerInfo?.aadharIPFS as string,
+        customerInfo?.panIPFS as string,
+        customerInfo?.photoIPFS as string,
+      )
+    ) {
+      notification.success("Hashes match");
+      setHashesMatch(true);
+    } else {
+      setHashesMatch(false);
+    }
+    setHashesVerified(true);
+  };
   const { writeContractAsync } = useScaffoldWriteContract("KYCVerification");
 
   useEffect(() => {
@@ -88,44 +107,42 @@ const KycRequest = ({ requestId }: { requestId: string }) => {
                 )}
               </div>
             </div>
+
             <div className="flex gap-4">
-              <button
-                className="btn btn-error"
-                onClick={() =>
-                  writeContractAsync({
-                    functionName: "verifyKyc",
-                    args: [kycRequest?.customerAddress, BigInt(0), requestId],
-                  })
-                }
-              >
-                Reject
-              </button>
-              <button
-                className="btn btn-success"
-                onClick={() => {
-                  if (
-                    compareHashes(
-                      kycRequest?.aadharHash as string,
-                      kycRequest?.panHash as string,
-                      kycRequest?.photoHash as string,
-                      customerInfo?.aadharIPFS as string,
-                      customerInfo?.panIPFS as string,
-                      customerInfo?.photoIPFS as string,
-                    )
-                  ) {
-                    notification.success("Hashes match");
-                  } else {
-                    notification.warning("Hashes do not match, check output carefully!!");
+              {!hashesVerified && (
+                <button className="btn btn-success" onClick={verifyHashes}>
+                  Verify hashes
+                </button>
+              )}
+
+              {hashesVerified && !hashesMatch ? (
+                <button
+                  className="btn btn-error"
+                  onClick={() =>
+                    writeContractAsync({
+                      functionName: "verifyKyc",
+                      args: [kycRequest?.customerAddress, BigInt(0), requestId],
+                    })
                   }
-                  writeContractAsync({
-                    functionName: "verifyKyc",
-                    args: [kycRequest?.customerAddress, BigInt(1), requestId],
-                  });
-                  router.push("/");
-                }}
-              >
-                Approve
-              </button>
+                >
+                  Reject
+                </button>
+              ) : null}
+
+              {hashesVerified && hashesMatch ? (
+                <button
+                  className="btn btn-success"
+                  onClick={() => {
+                    writeContractAsync({
+                      functionName: "verifyKyc",
+                      args: [kycRequest?.customerAddress, BigInt(1), requestId],
+                    });
+                    router.push("/");
+                  }}
+                >
+                  Approve
+                </button>
+              ) : null}
             </div>
           </div>
         </>

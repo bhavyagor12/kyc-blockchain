@@ -1,81 +1,37 @@
-# 🏗 Scaffold-ETH 2
+# KYC (Know Your Customer) verification
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
+using blockchain involves three main entities: customers, banks, and administrators. This system aims to streamline the verification process while maintaining security and privacy through blockchain technology. Additionally, future use cases may include community-driven administration and voting mechanisms for adding banks and taking actions within the system.
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+Entities:
 
-⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi, Viem, and Typescript.
+Customers: Customers are individuals who seek to utilize banking services. They initiate the KYC process by submitting their documents to their chosen bank. These documents typically include identification proofs such as Aadhar card, PAN card, and photographs. After submission, customers wait for the verification results. Once their KYC status is verified, they are permitted to open bank accounts. Any updates to their profile necessitate a KYC recheck.
+Banks: Banks play a crucial role in the KYC process. They receive and verify the documents submitted by customers. Upon verification, banks update the KYC status of customers, marking them as pending, rejected, verified, or under review. Banks maintain records of customers and their KYC statuses. Additionally, they facilitate account opening for customers with verified KYC.
+Admin: The administrator oversees the entire KYC verification system. They have the authority to track events within the system, including document submissions, verifications, and account openings. Administrators also have the capability to add new banks to the system. In future iterations, the system may allow community-driven administration, enabling users to participate in decision-making processes such as voting for adding new banks or taking specific actions within the system.
+Workflow:
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+Document Submission: Customers initiate the KYC process by submitting their documents to their chosen bank through the blockchain-based platform.
+Document Verification: Banks receive the submitted documents and verify them against predefined criteria. They update the KYC status of customers accordingly.
+KYC Status Update: Customers are informed about the status of their KYC verification, which can be pending, rejected, verified, or under review.
+Account Opening: Customers with verified KYC status are permitted to open bank accounts and access banking services.
+Profile Updates: Any updates to customer profiles require a recheck of KYC documents to ensure compliance with regulations and maintain updated information.
+Administrator Actions: The administrator monitors the system, tracks events, and has the authority to add new banks. In future iterations, the administrator may involve the community in decision-making processes such as adding new banks or implementing system-wide changes through voting mechanisms.
+By leveraging blockchain technology, KYC verification becomes more transparent, secure, and efficient. It enhances trust between customers, banks, and administrators while ensuring compliance with regulatory requirements. Moreover, the potential for community-driven administration adds a layer of decentralization and inclusivity to the system.
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+# Future Use Case: Multi-Signature Authorization
 
-## Requirements
+In addition to the existing KYC verification workflow, the system could implement multi-signature authorization for certain critical actions, such as adding new banks or making significant changes to the system's governance. Multi-signature authorization requires multiple parties to sign off on a transaction or action, ensuring that no single entity has complete control and reducing the risk of fraudulent activities.
 
-Before you begin, you need to install the following tools:
+### Implementation:
 
-- [Node (>= v18.17)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
+Adding New Banks: When a proposal to add a new bank to the system is initiated, it requires multi-signature authorization from multiple stakeholders, such as existing banks, administrators, and possibly community members. Each authorized entity must sign the proposal to validate the addition of the new bank.
+Governance Changes: Any changes to the governance structure, such as altering the roles and responsibilities of administrators or modifying decision-making processes, would also require multi-signature authorization. This ensures that decisions are made collaboratively and transparently, with input from various stakeholders.
+Emergency Actions: In case of emergency actions or critical system updates, multi-signature authorization can be enforced to prevent unilateral decisions. For example, if there's a security breach or regulatory compliance issue, multiple entities must agree on the course of action before it is executed.
+Benefits:
 
-## Quickstart
+Enhanced Security: Multi-signature authorization adds an extra layer of security by requiring consensus from multiple trusted parties. This reduces the risk of unauthorized access or fraudulent activities within the system.
+Decentralization: By distributing decision-making power among multiple stakeholders, multi-signature authorization promotes decentralization and prevents any single entity from monopolizing control over the system.
+Trust and Transparency: The transparent nature of multi-signature transactions fosters trust among participants in the KYC verification ecosystem. Every action requires validation from multiple parties, ensuring transparency and accountability.
+Resilience: In the event of a compromised entity or disagreement among stakeholders, multi-signature authorization helps maintain system resilience. Even if one party's authorization is compromised, the consensus of other signatories is still required to execute the action.
+By incorporating multi-signature authorization into the KYC verification system, the platform can further enhance security, decentralization, and trust among participants while enabling collaborative decision-making and ensuring compliance with regulatory standards.
 
-To get started with Scaffold-ETH 2, follow the steps below:
 
-1. Clone this repo & install dependencies
-
-```
-git clone https://github.com/scaffold-eth/scaffold-eth-2.git
-cd scaffold-eth-2
-yarn install
-```
-
-2. Run a local network in the first terminal:
-
-```
-yarn chain
-```
-
-This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`.
-
-3. On a second terminal, deploy the test contract:
-
-```
-yarn deploy
-```
-
-This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network. You can also customize the deploy script.
-
-4. On a third terminal, start your NextJS app:
-
-```
-yarn start
-```
-
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
-
-**What's next**:
-
-- Edit your smart contract `YourContract.sol` in `packages/hardhat/contracts`
-- Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-- Edit your deployment scripts in `packages/hardhat/deploy`
-- Edit your smart contract test in: `packages/hardhat/test`. To run test use `yarn hardhat:test`
-
-## Documentation
-
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
-
-To know more about its features, check out our [website](https://scaffoldeth.io).
-
-## Contributing to Scaffold-ETH 2
-
-We welcome contributions to Scaffold-ETH 2!
-
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.

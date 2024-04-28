@@ -36,7 +36,8 @@ const AdminPage: NextPage = () => {
 
   const { writeContractAsync } = useScaffoldWriteContract("KYCVerification");
   const { writeContractAsync: addBank } = useScaffoldWriteContract("KYCVerification");
-  if (role !== "admin") {
+  console.log(role);
+  if (role !== "Admin") {
     return (
       <div className="flex flex-col gap-2 bg-base-300 w-full h-full pt-4">
         <h1 className="text-2xl font-bold text-center">You are not authorized to access this page</h1>

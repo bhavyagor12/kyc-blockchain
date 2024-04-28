@@ -43,35 +43,6 @@ contract KYCVerification {
 	constructor() {
 		emit ContractInitialized();
 		admin = msg.sender;
-		KYCVerificationStructs.Bank memory newBank = KYCVerificationStructs
-			.Bank(
-				"adminBank",
-				0,
-				0xBA8a138210D5708f4F9B9F21CFf3C696DF78f658,
-				new address[](0),
-				"IFSC",
-				"Branch"
-			);
-		banks[0xBA8a138210D5708f4F9B9F21CFf3C696DF78f658] = newBank;
-		bankAddresses.push(0xBA8a138210D5708f4F9B9F21CFf3C696DF78f658);
-		KYCVerificationStructs.Customer
-			memory newCustomer = KYCVerificationStructs.Customer(
-				0xBA8a138210D5708f4F9B9F21CFf3C696DF78f658,
-				"Bhavya",
-				"21",
-				"9324216868",
-				"bafkreiacp57nt4kwion7lvne326zrcg6zzaterb4r5j222oknilhrxyjoy",
-				"bafkreiacp57nt4kwion7lvne326zrcg6zzaterb4r5j222oknilhrxyjoy",
-				"bafkreiacp57nt4kwion7lvne326zrcg6zzaterb4r5j222oknilhrxyjoy",
-				KYCVerificationStructs.KycStatus.Pending,
-				new address[](0)
-			);
-		customersInformation[
-			0xBA8a138210D5708f4F9B9F21CFf3C696DF78f658
-		] = newCustomer;
-		customerAddresses.push(0xBA8a138210D5708f4F9B9F21CFf3C696DF78f658);
-		emit NewCustomerCreated(0xBA8a138210D5708f4F9B9F21CFf3C696DF78f658);
-		emit NewBankCreated();
 	}
 
 	function addCustomer(
@@ -157,7 +128,7 @@ contract KYCVerification {
 		KYCVerificationStructs.Bank memory newBank = KYCVerificationStructs
 			.Bank(name, 0, bankAddress, new address[](0), ifsc, branch);
 		banks[bankAddress] = newBank;
-		bankAddresses.push(msg.sender);
+		bankAddresses.push(bankAddress);
 		emit NewBankCreated();
 	}
 
@@ -178,6 +149,10 @@ contract KYCVerification {
 			customer.status != KYCVerificationStructs.KycStatus.Approved,
 			"KYC Request already approved"
 		);
+		require(
+			customer.status != KYCVerificationStructs.KycStatus.UnderReview,
+			"KYC Request already under review"
+		);
 		string memory requestId = string.concat(
 			_aadharHash,
 			_panHash,
@@ -193,7 +168,7 @@ contract KYCVerification {
 			);
 		kycRequests[requestId] = newRequest;
 		bankAddressToKycRequests[_bankAddress].push(newRequest.requestId);
-		customer.status = KYCVerificationStructs.KycStatus.Pending;
+		customer.status = KYCVerificationStructs.KycStatus.UnderReview;
 		emit CustomerKYCRequestAdded();
 	}
 
@@ -236,8 +211,8 @@ contract KYCVerification {
 			customerAddress
 		];
 		require(
-			customer.status == KYCVerificationStructs.KycStatus.Pending,
-			"KYC Request not pending"
+			customer.status == KYCVerificationStructs.KycStatus.UnderReview,
+			"KYC Request not under review"
 		);
 		if (status == 1) {
 			KYCVerificationStructs.Bank storage bank = banks[msg.sender];

@@ -13,7 +13,7 @@ const StringTable = ({
     string => string !== "" && string !== "0x0000000000000000000000000000000000000000",
   );
   return (
-    <div className="overflow-x-auto bg-base-100">
+    <div className="overflow-x-auto bg-base-100 w-full">
       <table className="table-auto w-full border ">
         <thead>
           <tr>

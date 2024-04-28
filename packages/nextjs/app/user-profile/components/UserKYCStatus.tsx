@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useAccount } from "wagmi";
+import { Profile } from "~~/components/Profile";
 import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 const UserKYCStatus = ({ kycStatus }: { kycStatus: string }) => {
@@ -9,7 +10,6 @@ const UserKYCStatus = ({ kycStatus }: { kycStatus: string }) => {
     contractName: "KYCVerification",
     functionName: "getAllBankAddresses",
   });
-
   const { data: customerInfo } = useScaffoldReadContract({
     contractName: "KYCVerification",
     functionName: "getCustomerInfo",
@@ -27,13 +27,12 @@ const UserKYCStatus = ({ kycStatus }: { kycStatus: string }) => {
   }, [banksArray]);
   useEffect(() => {
     if (!selectedBankAddress || selectedBankAddress === "") return;
-
     refetch();
   }, [selectedBankAddress, refetch]);
 
   const { writeContractAsync: applyKyc } = useScaffoldWriteContract("KYCVerification");
   return (
-    <div className="w-[50%] bg-base-100 rounded-md">
+    <div className="bg-base-100 rounded-md">
       {banksArray && bankInfo ? (
         <>
           <div className="bg-base-100 w-full h-full rounded-md">
@@ -43,16 +42,16 @@ const UserKYCStatus = ({ kycStatus }: { kycStatus: string }) => {
             {kycStatus !== "Verified" && (
               <div className="flex flex-col items-center">
                 <div className="flex flex-col items-center justify-center w-full">
-                  <label htmlFor="bank" className="block text-lg font-semibold mb-2">
-                    Bank name
-                  </label>
                   <select onChange={e => setSelectedBankAddress(e.target.value)} className="select">
                     {banksArray.map((bank: string, index: number) => (
                       <option key={index} value={bank}>
-                        {bankInfo.name}
+                        {bank}
                       </option>
                     ))}
                   </select>{" "}
+                  <div className="mt-2 w-full">
+                    <Profile user="Bank" data={bankInfo} address={selectedBankAddress} />
+                  </div>
                 </div>
 
                 <button

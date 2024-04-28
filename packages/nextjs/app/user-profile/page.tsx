@@ -16,6 +16,7 @@ const processStatus = (status: number): string => {
   if (status === 0) return "Pending";
   if (status === 1) return "Verified";
   if (status === 2) return "Rejected";
+  if (status === 3) return "Under review";
   return "Pending";
 };
 
@@ -32,6 +33,7 @@ const UserProfile: NextPage = () => {
   useEffect(() => {
     refetch();
   }, [connectedAddress, refetch]);
+  console.log(customerInfo?.status);
   return (
     <div className="bg-base-300 w-full h-full">
       <h1 className="text-center">

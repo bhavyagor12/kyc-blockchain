@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Profile } from "~~/components/Profile";
 import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 const UserCreateBankAccount = () => {
@@ -25,7 +26,7 @@ const UserCreateBankAccount = () => {
 
   const { writeContractAsync: createBankAccount } = useScaffoldWriteContract("KYCVerification");
   return (
-    <div className="w-[50%] bg-base-100 rounded-md">
+    <div className="bg-base-100 rounded-md">
       {banksArray && bankInfo ? (
         <>
           <div className="bg-base-100 w-full h-full rounded-md">
@@ -37,10 +38,11 @@ const UserCreateBankAccount = () => {
                 <select onChange={e => setSelectedBankAddress(e.target.value)} className="select">
                   {banksArray.map((bank: string, index: number) => (
                     <option key={index} value={bank}>
-                      {bankInfo.name}
+                      {bank}
                     </option>
                   ))}
-                </select>{" "}
+                </select>
+                <Profile user="Bank" data={bankInfo} address={selectedBankAddress as string} />
               </div>
 
               <button
