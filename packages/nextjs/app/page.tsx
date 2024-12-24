@@ -1,12 +1,12 @@
 "use client";
+
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
-import { BuildingLibraryIcon, UserIcon,UsersIcon } from "@heroicons/react/24/outline";
+import { BuildingLibraryIcon, UserIcon, UsersIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-eth";
 
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
-
   return (
     <>
       <div className="flex items-center flex-col flex-grow pt-10">

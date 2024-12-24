@@ -43,6 +43,26 @@ contract KYCVerification {
 	constructor() {
 		emit ContractInitialized();
 		admin = msg.sender;
+		KYCVerificationStructs.Bank memory bank = KYCVerificationStructs.Bank(
+			"SBI",
+			0,
+			msg.sender,
+			new address[](0),
+			"SBI0001",
+			"Mumbai"
+		);
+		banks[msg.sender] = bank;
+		bankAddresses.push(msg.sender);
+		KYCVerificationStructs.Bank memory bank1 = KYCVerificationStructs.Bank(
+			"ICICI",
+			0,
+			0xD1A8b77A676A5C8d1f11226C9b491C9a0b76A160,
+			new address[](0),
+			"ICICI0001",
+			"Mumbai"
+		);
+		banks[0xD1A8b77A676A5C8d1f11226C9b491C9a0b76A160] = bank1;
+		bankAddresses.push(0xD1A8b77A676A5C8d1f11226C9b491C9a0b76A160);
 	}
 
 	function addCustomer(
@@ -122,7 +142,7 @@ contract KYCVerification {
 		string memory branch
 	) public onlyAdmin {
 		require(
-			banks[msg.sender].bankAddress != msg.sender,
+			banks[bankAddress].bankAddress != msg.sender,
 			"Bank already exists"
 		);
 		KYCVerificationStructs.Bank memory newBank = KYCVerificationStructs
